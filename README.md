@@ -204,3 +204,36 @@ govulncheck ./...
 ```
 
 No vulnerabilities found.
+
+## Techical Assessment Write-up points
+
+### Decisions and Assumptions
+
+- Hexagonal architecture to allow for scalablity of different input/output methods/interfaces
+  - Logging
+  - Bulk transaction inputs via CLI/Alternate system
+  - SMS/E-mail confirmations/messages
+- MySQL used for simple demonstration of recording of data, with basic table structure
+  - direct users with primary key 'id'
+  - transactions with primary key 'id' and foreign key 'user_id' to use direct user 'id'
+  - 'employee' table could be created with an additional column for 'employer' and used in transactions in the same way
+  - other fields may be added where appropriate.
+- Could be changed/supplemented using adapters for another storage solution e.g. mongoDB
+- In a smililar fashion, logging could be added via adapters and output/stored 
+- Enum created to store types of funds available. Single point of truth for allowed funds, retrieved by FE
+- Assumption:  An existing FE based on the Employee service can be altered and reused in place of current example
+- Assumption: Further logic can be implemented based on an existing FE functionality i.e. Further work seen below
+- Assumption: There is already an implementation of storing customer/transaction data, and the schema/adapters implemented here can be adjusted to suit
+
+
+### Further/unimplemented work
+
+- More complete FE:
+  - Login page/Auth. Prevents a new user ID every transaction
+  - New domain entity and core logic for employees
+  - Migration of employee to direct user and vice versa
+  - Record retrieval for users to see past transactions 
+    - (General functionality for commpleteness of app in line with business need and requirements)
+- Use of distributed systems for scaling/resilience
+- Properly designed storage for the use cases required, with additional consideration to columns
+- Further UX adapters e.g. SMS/E-mail confirmations of transactions
